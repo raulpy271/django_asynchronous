@@ -1,0 +1,31 @@
+version: "3"
+services:
+  message_broker:
+    image: rabbitmq:latest
+    ports:
+      - 15672:15672
+    networks:
+      djangoAsynchronous:
+        aliases:
+          - rabbit
+  tasks:
+    image: celery
+    depends_on:
+      - message_broker
+    networks:
+      - djangoAsynchronous
+  app:
+    image: app
+    ports:
+      - 8000:8000
+    command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - message_broker
+      - tasks
+    networks:
+      djangoAsynchronous:
+        aliases:
+          - app
+
+networks:
+  djangoAsynchronous:
