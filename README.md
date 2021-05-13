@@ -30,3 +30,7 @@ Ver conexão com o rabbitMQ:
 ```
 docker logs djangoasynchronous_tasks_1
 ```
+
+O log com erro é postado neste [issue](https://github.com/raulpy271/djangoAsynchronous/issues/1).
+
+
