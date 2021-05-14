@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'djangoAsynchronous.urls'
+ROOT_URLCONF = 'django_asynchronous.urls'
 
 TEMPLATES = [
     {
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'djangoAsynchronous.wsgi.application'
+WSGI_APPLICATION = 'django_asynchronous.wsgi.application'
 
 
 # Database
