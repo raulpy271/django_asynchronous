@@ -11,5 +11,8 @@ COPY . $DockerHOME
 RUN pip install --upgrade pip  
 RUN pip install -r tasks/requirements.txt  
 
-CMD celery -A tasks.tasks worker --loglevel=INFO
+CMD celery \
+    --broker amqp://guest:guest@rabbit:5672// \
+    --app tasks.tasks worker \
+    --loglevel=INFO
 
