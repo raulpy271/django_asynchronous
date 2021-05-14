@@ -12,11 +12,17 @@ services:
           - rabbit
   tasks:
     image: celery
-    command: celery -b amqp://guest:guest@rabbit:5672// --app tasks.tasks worker --loglevel=INFO
+    command: >
+      celery 
+        --broker amqp://guest:guest@rabbit:5672// 
+        --app tasks.tasks worker 
+        --loglevel=INFO
     depends_on:
       - message_broker
     networks:
       - djangoAsynchronous
+    volumes:
+      - ./:/djangoAsynchronous
   app:
     image: app
     ports:
@@ -29,6 +35,8 @@ services:
       djangoAsynchronous:
         aliases:
           - app
+    volumes:
+      - ./:/djangoAsynchronous
 
 networks:
   djangoAsynchronous:
