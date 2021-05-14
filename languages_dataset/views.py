@@ -1,8 +1,10 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, get_list_or_404
+from .models import Language
 
 
 def index(request):
-    return HttpResponse("Este app mostra de uma forma unificada informaçoes sobre linguagens de programaçao")
+    languages = get_list_or_404(Language)
+    context = {'languages': languages}
+    return render(request, 'index.html', context)
 
 

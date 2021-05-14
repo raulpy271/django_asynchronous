@@ -1,0 +1,24 @@
+<h1> Este app mostra de uma forma unificada informaçoes sobre linguagens de programaçao
+</h1>
+
+<table>
+    <tr>
+        <th> Nome </th>
+        <th> Ano </th>
+        <th> Paradigma </th>
+        <th> Site </th>
+    </tr>
+    {% for language in languages %}
+        <tr>
+            <td> {{ language.name     }} </td>
+            <td> {{ language.year     }} </td>
+            <td> {{ language.paradigm }} </td>
+            <td> 
+                <a href="{{language.site}}">
+                    {{ language.site }} 
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
