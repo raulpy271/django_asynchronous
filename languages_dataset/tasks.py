@@ -4,37 +4,55 @@ from celery import shared_task
 from pandas import read_csv
 
 from .models import Language
-from .utils import get_all_files_path
+from .utils import get_all_files_path, get_extension, get_delimiter
 
 
 def save_language(language):
-    filds = {
-        'name': language['name'],
-        'year': language['year'],
-        'paradigm': language['paradigm'],
-        'site': language['site']}
-    Language(**filds).save()
+    fields = language.to_dict()
+    Language(**fields).save()
 
 
-@shared_task
 def save_dataset(df):
-    for language in df:
+    for index in df.index:
+        language = df.loc[index]
         save_language(language)
 
 
-def save_csv(csv_path, **kargs):
-    df = read_csv(csv_path, **kargs)
+@shared_task
+def save_csv(path):
+    delimiter = get_delimiter(path)
+    df = read_csv(path, delimiter)
     save_dataset(df)
 
 
-def save_excel(excel_path, **kargs):
-    df = read_csv(excel_path, **kargs)
-    save_dataset(df)
+@shared_task
+def save_excel(path):
+    pass
 
+
+@shared_task
+def save_json(path):
+    pass
+
+
+@shared_task
+def save_yml(path):
+    pass
 
 
 def select_parser(file_path):
-    pass
+    get_parser = {
+        'csv': save_csv,
+        'tsv': save_csv,
+        'xlsx': save_excel,
+        'json': save_json,
+        'yml': save_yml,
+        'yaml': save_yml,
+        'default': save_csv}
+    extension = get_extension(file_path)
+    if not extension in get_parser.keys():
+        extension = 'default'
+    return get_parser[extension]
 
 
 @shared_task
@@ -42,17 +60,7 @@ def read_files():
     data_path = environ.get('DATA_SOURCE_PATH', 'data_source/')
     files_path = get_all_files_path(data_path)
     for file_path in files_path:
-        #parser, kargs = select_parser(file_path)
-        #parser.delay(file_path, **kargs)
-        print('\n', file_path, '\n')
-
-
-def save_example():
-    df = [{
-        'name': 'VIM Script', 
-        'year': 10, 
-        'paradigm': 'crazy', 
-        'site': 'https'}]
-    save_dataset(df)
+        parser = select_parser(file_path)
+        return parser.delay(file_path)
 
 
