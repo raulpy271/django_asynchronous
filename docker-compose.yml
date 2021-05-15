@@ -18,6 +18,8 @@ services:
         --app django_asynchronous
         worker
         --loglevel=INFO
+    environment:
+      - DATA_SOURCE_PATH=data_source/
     depends_on:
       - message_broker
     networks:
