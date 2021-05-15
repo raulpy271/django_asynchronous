@@ -1,13 +1,24 @@
-from django.shortcuts import render, get_list_or_404
+from django.shortcuts import render
 from .models import Language
-from .tasks import save_dataset
+from .tasks import read_files, save_example
+
+
+was_processing = False
 
 
 def index(request):
-    save_dataset.delay({'name': 'Elixir', 'year': 2015, 
-        'paradigm': 'functional', 'site': 'https://aaa.org'})
-    languages = get_list_or_404(Language)
-    context = {'languages': languages}
+    global was_processing
+    render_table = False
+    languages = Language.objects.all()
+    if languages and was_processing:
+        render_table = True
+    else:
+        read_files.delay()
+        save_example()
+        was_processing = True
+    context = {
+        'languages': languages, 
+        'render_table': render_table}
     return render(request, 'index.html', context)
 
 
