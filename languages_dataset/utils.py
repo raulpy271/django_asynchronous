@@ -33,7 +33,7 @@ def catch_parser_error(parser):
         try:
             return parser(path)
         except:
-            print('Can\'t when parsing this file: ' + path)
+            print('Can\'t parse this file: ' + path)
     return parser_with_handler_of_error
 
 
