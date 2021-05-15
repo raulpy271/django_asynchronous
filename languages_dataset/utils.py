@@ -28,3 +28,12 @@ def get_delimiter(path):
     return ','
 
 
+def catch_parser_error(parser):
+    def parser_with_handler_of_error(path):
+        try:
+            return parser(path)
+        except:
+            print('Can\'t parse this file: ' + path)
+    return parser_with_handler_of_error
+
+
