@@ -1,13 +1,9 @@
 from celery import Celery
 from pandas import read_csv
 
+from .db import save_dataset
 
-app = Celery('tasks.tasks')
-
-
-@app.task
-def save_dataset(df):
-    pass
+app = Celery('languages_dataset.tasks.tasks')
 
 
 @app.task
@@ -33,5 +29,15 @@ def read_files(data_path):
     for file_path in files_path:
         parser, kargs = select_parser(file_path)
         parser.delay(file_path, **kargs)
+
+
+@app.task
+def save_example():
+    df = [{
+        'name': 'VIM Script', 
+        'year': 10, 
+        'paradigm': 'crazy', 
+        'site': 'https'}]
+    save_dataset(df)
 
 
