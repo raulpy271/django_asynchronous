@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Language
-from .tasks import read_files, save_example
+from .tasks import read_files
 
 
 was_processing = False
@@ -14,7 +14,6 @@ def index(request):
         render_table = True
     else:
         read_files.delay()
-        save_example()
         was_processing = True
     context = {
         'languages': languages, 
