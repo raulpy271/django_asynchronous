@@ -1,10 +1,17 @@
 from celery import shared_task
 from pandas import read_csv
 
+from .models import Language
+
 
 @shared_task
-def save_dataset():
-    print('\n\n --- Hello async --- \n\n')
+def save_dataset(df):
+    filds = {
+        'name': df['name'],
+        'year': df['year'],
+        'paradigm': df['paradigm'],
+        'site': df['site']}
+    Language(**filds).save()
 
 
 def save_csv(csv_path, **kargs):
