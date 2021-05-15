@@ -15,7 +15,8 @@ services:
     command: >
       celery 
         --broker amqp://guest:guest@rabbit:5672// 
-        --app languages_dataset.tasks.tasks worker 
+        --app django_asynchronous
+        worker
         --loglevel=INFO
     depends_on:
       - message_broker
