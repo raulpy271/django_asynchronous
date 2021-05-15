@@ -61,6 +61,6 @@ def read_files():
     files_path = get_all_files_path(data_path)
     for file_path in files_path:
         parser = select_parser(file_path)
-        return parser.delay(file_path)
+        parser.delay(file_path)
 
 
