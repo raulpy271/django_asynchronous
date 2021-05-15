@@ -11,11 +11,11 @@ services:
         aliases:
           - rabbit
   tasks:
-    image: celery
+    image: app
     command: >
       celery 
         --broker amqp://guest:guest@rabbit:5672// 
-        --app tasks.tasks worker 
+        --app languages_dataset.tasks.tasks worker 
         --loglevel=INFO
     depends_on:
       - message_broker
