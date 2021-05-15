@@ -1,17 +1,25 @@
+from os import environ
+
 from celery import shared_task
 from pandas import read_csv
 
 from .models import Language
+from .utils import get_all_files_path
+
+
+def save_language(language):
+    filds = {
+        'name': language['name'],
+        'year': language['year'],
+        'paradigm': language['paradigm'],
+        'site': language['site']}
+    Language(**filds).save()
 
 
 @shared_task
 def save_dataset(df):
-    filds = {
-        'name': df['name'],
-        'year': df['year'],
-        'paradigm': df['paradigm'],
-        'site': df['site']}
-    Language(**filds).save()
+    for language in df:
+        save_language(language)
 
 
 def save_csv(csv_path, **kargs):
@@ -29,11 +37,14 @@ def select_parser(file_path):
     pass
 
 
-def read_files(data_path):
-    files_path = []
+@shared_task
+def read_files():
+    data_path = environ.get('DATA_SOURCE_PATH', 'data_source/')
+    files_path = get_all_files_path(data_path)
     for file_path in files_path:
-        parser, kargs = select_parser(file_path)
-        parser.delay(file_path, **kargs)
+        #parser, kargs = select_parser(file_path)
+        #parser.delay(file_path, **kargs)
+        print('\n', file_path, '\n')
 
 
 def save_example():

@@ -1,24 +1,30 @@
-<h1> Este app mostra de uma forma unificada informaçoes sobre linguagens de programaçao
-</h1>
 
-<table>
-    <tr>
-        <th> Nome </th>
-        <th> Ano </th>
-        <th> Paradigma </th>
-        <th> Site </th>
-    </tr>
-    {% for language in languages %}
-        <tr>
-            <td> {{ language.name     }} </td>
-            <td> {{ language.year     }} </td>
-            <td> {{ language.paradigm }} </td>
-            <td> 
-                <a href="{{language.site}}">
-                    {{ language.site }} 
-                </a>
-            </td>
-        </tr>
-    {% endfor %}
-</table>
+<p> Este app mostra de uma forma unificada informaçoes sobre linguagens de programaçao </p>
+
+<div clas="dados">
+    {% if render_table %}
+        <table>
+            <tr>
+                <th> Nome </th>
+                <th> Ano </th>
+                <th> Paradigma </th>
+                <th> Site </th>
+            </tr>
+            {% for language in languages %}
+                <tr>
+                    <td> {{ language.name     }} </td>
+                    <td> {{ language.year     }} </td>
+                    <td> {{ language.paradigm }} </td>
+                    <td> 
+                        <a href="{{language.site}}">
+                            {{ language.site }} 
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p> Os dados estao sendo processados, atualize a pagina </p>
+    {% endif %}
+</div>
 
