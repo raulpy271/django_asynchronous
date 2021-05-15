@@ -8,3 +8,23 @@ def get_all_files_path(path):
     return list(only_path_of_files)
 
 
+def has_extensions(path, extensions):
+    for extension in extensions:
+        if path.endswith( '.' + extension):
+            return True
+    return False
+
+
+def get_extension(path):
+    if '.' in path:
+        path_separeted_by_dot = path.split('.')
+        extension = path_separeted_by_dot.pop()
+        return extension
+    else:
+        return ''
+    
+
+def get_delimiter(path):
+    return ','
+
+
