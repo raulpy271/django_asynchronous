@@ -1,4 +1,4 @@
-name,year,paradigm,site
-Elixir,1991,multi-paradigma,https://www.python.org/
-Haskell,1977,dominio especifico,https://en.wikipedia.org/wiki/AWK
-Clojure,1977,dominio especifico,https://en.wikipedia.org/wiki/AWK
+name	year	paradigm	site
+Elixir	1991	multi-paradigma	https://www.elixir.org/
+Haskell	1990	multi-paradigma	https://www.Haskell.org/
+Erlang	1980	multi-paradigma	https://www.Erlang.org/

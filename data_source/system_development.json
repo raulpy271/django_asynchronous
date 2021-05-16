@@ -1,0 +1,14 @@
+[
+    {
+        "name"     : "Fortran",
+        "year"     : 1960,
+        "paradigm" : "Processamento numerico",
+        "site"     : "https://fortran-lang.org/"
+    },
+    {
+        "name"     : "Rust",
+        "year"     : 2015,
+        "paradigm" : "WebAssembly",
+        "site"     : "https://rust-lang.org/"
+    }
+]

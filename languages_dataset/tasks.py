@@ -1,7 +1,9 @@
 from os import environ
 
 from celery import shared_task
-from pandas import read_csv, read_excel
+from pandas import read_csv, read_excel, read_json, DataFrame
+from yaml import load
+
 
 from .models import Language
 from .utils import (
@@ -40,13 +42,17 @@ def save_excel(path):
 @shared_task(name='parser_json')
 @catch_parser_error
 def save_json(path):
-    pass
+    df = read_json(path)
+    save_dataset(df)
 
 
 @shared_task(name='parser_yml')
 @catch_parser_error
 def save_yml(path):
-    pass
+    with open(path) as yml_file:
+        dict_of_yaml = load(yml_file)
+        df = DataFrame(dict_of_yaml)
+    save_dataset(df)
 
 
 def select_parser(file_path):

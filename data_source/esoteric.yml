@@ -1,0 +1,9 @@
+- name: brainfuck
+  year: 2000
+  paradigm: esoteric
+  site: https://en.wikipedia.org/wiki/Brainfuck
+- name: whitespace
+  year: 2001
+  paradigm: esoteric
+  site: https://en.wikipedia.org/wiki/Whitespace_(programming_language)
+
