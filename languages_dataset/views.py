@@ -13,7 +13,7 @@ def index(request):
     if languages and was_processing:
         render_table = True
     else:
-        read_files.delay()
+        read_files.apply_async(retry=False)
         was_processing = True
     context = {
         'languages': languages, 
