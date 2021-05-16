@@ -6,8 +6,8 @@
 
     <p> Este app mostra de uma forma unificada informaçoes sobre linguagens de programaçao </p>
 
-    <div class="data">
-        {% if render_table %}
+    {% if render_table %}
+        <div class="data">
             <table>
                 <tr>
                     <th> Nome </th>
@@ -28,11 +28,10 @@
                     </tr>
                 {% endfor %}
             </table>
-        {% else %}
-            <p> Os dados estao sendo processados, atualize a pagina </p>
-        {% endif %}
-    </div>
-
+        </div>
+    {% else %}
+        <p> Os dados estao sendo processados, atualize a pagina </p>
+    {% endif %}
 </div>
 
 </body>
