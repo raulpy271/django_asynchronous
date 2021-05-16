@@ -49,7 +49,10 @@ def save_json(path):
 @shared_task(name='parser_yml')
 @catch_parser_error
 def save_yml(path):
-    pass
+    with open(path) as yml_file:
+        dict_of_yaml = load(yml_file)
+        df = DataFrame(dict_of_yaml)
+    save_dataset(df)
 
 
 def select_parser(file_path):
