@@ -1,0 +1,4 @@
+name,year,paradigm,site
+Elixir,1991,multi-paradigma,https://www.python.org/
+Haskell,1977,dominio especifico,https://en.wikipedia.org/wiki/AWK
+Clojure,1977,dominio especifico,https://en.wikipedia.org/wiki/AWK
