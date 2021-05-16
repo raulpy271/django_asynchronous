@@ -1,7 +1,7 @@
 from os import environ
 
 from celery import shared_task
-from pandas import read_csv
+from pandas import read_csv, read_excel
 
 from .models import Language
 from .utils import (
@@ -31,9 +31,9 @@ def save_csv(path):
 
 
 @shared_task(name='parser_excel')
-@catch_parser_error
 def save_excel(path):
-    pass
+    df = read_excel(path)
+    save_dataset(df)
 
 
 @shared_task(name='parser_json')
@@ -53,11 +53,12 @@ def select_parser(file_path):
         'csv': save_csv,
         'tsv': save_csv,
         'xlsx': save_excel,
+        'xls': save_excel,
         'json': save_json,
         'yml': save_yml,
         'yaml': save_yml,
         'default': save_csv}
-    extension = get_extension(file_path)
+    extension = get_extension(file_path).lower()
     if not extension in get_parser.keys():
         extension = 'default'
     return get_parser[extension]
