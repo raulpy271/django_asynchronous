@@ -31,6 +31,7 @@ def save_csv(path):
 
 
 @shared_task(name='parser_excel')
+@catch_parser_error
 def save_excel(path):
     df = read_excel(path)
     save_dataset(df)
