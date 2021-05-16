@@ -1,5 +1,7 @@
 from os import scandir
 
+from detect_delimiter import detect
+
 
 def get_all_files_path(path):
     nodes = scandir(path)
@@ -25,7 +27,13 @@ def get_extension(path):
     
 
 def get_delimiter(path):
-    return ','
+    with open(path) as csv_file:
+        first_line = csv_file.readline()
+        if first_line:
+            delimiter = detect(first_line)
+            if delimiter:
+                return delimiter
+    raise ValueError('Can\'t detect the delimiter')
 
 
 def catch_parser_error(parser):
