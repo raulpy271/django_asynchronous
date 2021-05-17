@@ -1,6 +1,6 @@
 
 
-var data;
+var interval;
 
 
 function fetch_languages() {
@@ -38,15 +38,25 @@ function convert_json_to_html(json) {
 
 
 function render_table() {
-    let table_div = document.querySelector('div.table_div')
-    table_div.innerHTML = "Buscando dados..."
     fetch_languages()
     .then(json => {
-        let table = convert_json_to_html(json)
-        table_div.innerHTML = table
+        let table_div = document.querySelector('div.table_div')
+        table_div.innerHTML = "Processando dados..."
+        if (json.length !== 0) {
+            let table = convert_json_to_html(json)
+            table_div.innerHTML = table
+            clearInterval(interval)
+        }
     }).catch(err => {
         console.log(err)
     })
+}
+
+
+function render_table_with_retry() {
+    let table_div = document.querySelector('div.table_div')
+    table_div.innerHTML = "Tentando conectar com o servidor..."
+    interval = setInterval(render_table, 2000)
 }
 
 
