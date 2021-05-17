@@ -4,34 +4,16 @@
 
 <div class="app">
 
-    <p> Este app mostra de uma forma unificada informaçoes sobre linguagens de programaçao </p>
+    <div class="init_div">
+        <p> Este app mostra de uma forma unificada informaçoes sobre linguagens de programaçao </p>
+         <button type="button" onclick="render_table()">
+             Renderizar dados
+         </button>
+    </div>
 
-    {% if render_table %}
-        <div class="data">
-            <table>
-                <tr>
-                    <th> Nome </th>
-                    <th> Ano </th>
-                    <th> Paradigma </th>
-                    <th> Site </th>
-                </tr>
-                {% for language in languages %}
-                    <tr>
-                        <td> {{ language.name     }} </td>
-                        <td> {{ language.year     }} </td>
-                        <td> {{ language.paradigm }} </td>
-                        <td> 
-                            <a href="{{language.site}}">
-                                {{ language.site }} 
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </table>
-        </div>
-    {% else %}
-        <p> Os dados estao sendo processados, atualize a pagina </p>
-    {% endif %}
+    <div class="table_div">
+    </div>
+
 </div>
-
+    <script src="{% static 'js/script.js'%}"></script>  
 </body>
