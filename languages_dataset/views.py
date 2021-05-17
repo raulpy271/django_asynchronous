@@ -7,22 +7,8 @@ from .serializers import LanguageSerializer
 from .tasks import read_files
 
 
-was_processing = False
-
-
 def index(request):
-    global was_processing
-    render_table = False
-    languages = Language.objects.all()
-    if languages and was_processing:
-        render_table = True
-    else:
-        read_files.apply_async(retry=False)
-        was_processing = True
-    context = {
-        'languages': languages, 
-        'render_table': render_table}
-    return render(request, 'index.html', context)
+    return render(request, 'index.html', {})
 
 
 @api_view(['GET'])
