@@ -10,6 +10,8 @@ services:
       djangoAsynchronous:
         aliases:
           - rabbit
+    volumes:
+      - broker_volume:/var/lib/rabbitmq/
   tasks:
     image: app
     command: >
@@ -45,3 +47,7 @@ services:
 
 networks:
   djangoAsynchronous:
+
+volumes:
+  broker_volume:
+
