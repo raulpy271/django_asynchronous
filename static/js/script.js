@@ -3,6 +3,15 @@
 var interval;
 
 
+function cut_link(link) {
+    let max = 20
+    if (link.length > max) {
+        return link.substring(0, max)
+    }
+    return link
+}
+
+
 function fetch_languages() {
     return fetch('data')
     .then(response => {
@@ -12,6 +21,7 @@ function fetch_languages() {
 
 
 function convert_json_to_html(json) {
+    let link_cutted
     let table = '<div class="data">'
     table += `
         <table>
@@ -23,12 +33,14 @@ function convert_json_to_html(json) {
         </tr>
     `
     for (language of json) {
+        link_cutted = cut_link(language.site)
         table += `
             <tr>
                 <td> ${language.name} </td>
                 <td> ${language.year} </td>
                 <td> ${language.paradigm} </td>
-                <td> ${language.site} </td>
+                <td> <a href="${language.site}"> ${link_cutted}</a>
+                </td>
             </tr>
         `
     }
