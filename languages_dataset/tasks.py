@@ -3,9 +3,9 @@ from os import environ
 from celery import shared_task
 from pandas import read_csv, read_excel, read_json, DataFrame
 from yaml import load
+from camelot import read_pdf
 
-
-from .models import Language
+from .models import Language, columns
 from .utils import (
     get_all_files_path,
     get_extension, 
@@ -14,7 +14,11 @@ from .utils import (
 
 
 def save_language(language):
-    fields = language.to_dict()
+    fields = {
+        'name': language['name'],
+        'year': language['year'],
+        'paradigm': language['paradigm'],
+        'site': language['site']}
     Language(**fields).save()
 
 
@@ -30,6 +34,16 @@ def save_csv(path):
     delimiter = get_delimiter(path)
     df = read_csv(path, delimiter)
     save_dataset(df)
+
+
+@shared_task(name='parser_pdf')
+def save_pdf(path):
+    pdf = read_pdf(path, pages='all')
+    for table in pdf:
+        df = table.df
+        df.columns = columns
+        df = df.loc[1:]
+        save_dataset(df)
 
 
 @shared_task(name='parser_excel')
@@ -64,6 +78,7 @@ def select_parser(file_path):
         'json': save_json,
         'yml': save_yml,
         'yaml': save_yml,
+        'pdf': save_pdf,
         'default': save_csv}
     extension = get_extension(file_path).lower()
     if not extension in get_parser.keys():
