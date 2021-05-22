@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from .models import Language
+from .models import Language, columns
 
 
 class LanguageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Language
-        fields = ('name', 'year', 'paradigm', 'site')
+        fields = columns
 
 
